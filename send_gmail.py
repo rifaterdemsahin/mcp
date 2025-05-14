@@ -2,6 +2,18 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 import getpass
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get app password from environment variable
+app_password = os.getenv('GMAIL_APP_PASSWORD')
+if not app_password:
+    raise ValueError('GMAIL_APP_PASSWORD not set in .env file')
+
+print('DEBUG: GMAIL_APP_PASSWORD from env:', os.environ.get('GMAIL_APP_PASSWORD'))
 
 # Read recipient email from emails.md
 with open('emails.md', 'r') as f:
@@ -28,9 +40,6 @@ with open('email_content.md', 'r') as f:
 
 # Email details
 sender = 'info@pexabo.com'
-
-# Prompt for app password securely
-app_password = getpass.getpass('Enter Gmail app password for info@pexabo.com: ')
 
 # Create the email
 msg = EmailMessage()

@@ -1,2 +1,4 @@
 - set up with mac
     - https://resend.com/domains/365637fb-20a9-4154-b784-49a6d3364fdb
+    - https://account.squarespace.com/domains/managed/pexabo.com/dns/dns-settings
+    - 

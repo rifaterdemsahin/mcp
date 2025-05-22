@@ -1,4 +1,6 @@
 - set up with mac
     - https://resend.com/domains/365637fb-20a9-4154-b784-49a6d3364fdb
     - https://account.squarespace.com/domains/managed/pexabo.com/dns/dns-settings
-    - 
+    - https://manatee-terrier-9mdp.squarespace.com/config/settings/domains-email/domains
+    - https://mail.google.com/mail/u/0/#search/onboarding%40resend.dev
+    - [text](../../mcp-send-email.zip)

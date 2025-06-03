@@ -59,9 +59,13 @@ async def handle_list_tools() -> list[types.Tool]:
                         "type": "string",
                         "description": "Email subject line",
                         "default": "🎉 Happy Birthday! Party Time! 🎂"
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "The body of the birthday message"
                     }
                 },
-                "required": ["to_email"],
+                "required": ["to_email", "message"],
             },
         )
     ]
@@ -87,6 +91,8 @@ async def handle_call_tool(
         
         to_email = arguments["to_email"]
         subject = arguments.get("subject", "🎉 Happy Birthday! Party Time! 🎂")
+        message = arguments["message"]  # Now required and explicitly used
+
         EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS', 'info@pexabo.com')
         EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD', 'your-default-password')
         
@@ -94,57 +100,7 @@ async def handle_call_tool(
         msg['Subject'] = subject
         msg['From'] = EMAIL_ADDRESS
         msg['To'] = to_email
-        
-        birthday_message = """🎉 HAPPY BIRTHDAY! 🎂
-お誕生日おめでとうございます！🎌
-
-Dear Birthday Star! ⭐
-
-Wishing you the most amazing birthday ever! 🌟
-
-May your special day be filled with:
-🎁 Wonderful surprises
-😄 Lots of laughter and joy  
-🎊 Fun celebrations
-💕 Love from friends and family
-✨ Magical moments
-😊 Happiness that lasts all year
-📸 Unforgettable memories
-
-Here's to another fantastic year ahead! 🥂
-
-Hope your birthday is as awesome as you are! 🌈
-
-Blow out those candles and make a wish! 🕯️💫
-
-🎵 Happy Birthday to You! 🎵
-🎵 Happy Birthday to You! 🎵
-🎵 Happy Birthday Dear Friend! 🎵
-🎵 Happy Birthday to You! 🎵
-
-🎌 Japanese Birthday Greetings:
-お誕生日おめでとうございます！(Otanjoubi omedetou gozaimasu!)
-素敵な一年になりますように！🌸 (Suteki na ichinen ni narimasu you ni!)
-Happy Birthday & May you have a wonderful year! 
-
-🎋 Japanese Holiday Greetings:
-新年明けましておめでとうございます！🎍 (Akemashite omedetou gozaimasu!)
-今年もよろしくお願いします！⛩️ (Kotoshi mo yoroshiku onegaishimasu!)
-Happy New Year & Please treat me favorably this year too!
-
-春の季節、桜の花のように美しい日々でありますように！🌸
-(Haru no kisetsu, sakura no hana no you ni utsukushii hibi de arimasu you ni!)
-In spring season, may your days be as beautiful as cherry blossoms!
-
-With warmest birthday wishes, 💝
-Your MCP-powered friend 🐍💻
-
-P.S. This birthday greeting was sent with love using MCP! 💖🎈
-
-🎂🎉🎁🎊🌟⭐✨🎈💫🥳🎌🌸🎋
-"""
-        
-        msg.set_content(birthday_message, charset='utf-8')
+        msg.set_content(message, charset='utf-8')
         
         try:
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
@@ -166,7 +122,6 @@ P.S. This birthday greeting was sent with love using MCP! 💖🎈
 async def main():
     print("Debug: Preparing notification_options", file=sys.stderr)
     
-    # Create a simple namespace object instead of NotificationOptions
     notification_options = SimpleNamespace(tools_changed=False)
     
     print(f"Debug: Calling get_capabilities with notification_options={notification_options}", 

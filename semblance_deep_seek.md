@@ -490,3 +490,21 @@ ImportError: cannot import name 'NotificationOptions' from 'mcp.server.models' (
 
 ---
 
+happiness 
+
+
+2025-06-03T21:04:58.730Z [demo-server] [info] Initializing server...
+2025-06-03T21:04:58.759Z [demo-server] [info] Server started and connected successfully
+2025-06-03T21:04:58.761Z [demo-server] [info] Message from client: {"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"claude-ai","version":"0.1.0"}},"jsonrpc":"2.0","id":0}
+Debug: Preparing notification_options
+Debug: Calling get_capabilities with notification_options=namespace(tools_changed=False)
+2025-06-03T21:04:59.635Z [demo-server] [info] Message from server: {"jsonrpc":"2.0","id":0,"result":{"protocolVersion":"2024-11-05","capabilities":{"experimental":{},"tools":{"listChanged":false}},"serverInfo":{"name":"demo-server","version":"0.1.0"}}}
+2025-06-03T21:04:59.647Z [demo-server] [info] Message from client: {"method":"notifications/initialized","jsonrpc":"2.0"}
+2025-06-03T21:04:59.669Z [demo-server] [info] Message from client: {"method":"tools/list","params":{},"jsonrpc":"2.0","id":1}
+2025-06-03T21:04:59.670Z [demo-server] [info] Message from client: {"method":"tools/list","params":{},"jsonrpc":"2.0","id":2}
+2025-06-03T21:04:59.670Z [demo-server] [info] Message from client: {"method":"resources/list","params":{},"jsonrpc":"2.0","id":3}
+2025-06-03T21:04:59.675Z [demo-server] [info] Message from server: {"jsonrpc":"2.0","id":1,"result":{"tools":[{"name":"echo","description":"Echo back the input text","inputSchema":{"type":"object","properties":{"text":{"type":"string","description":"Text to echo back"}},"required":["text"]}},{"name":"add_numbers","description":"Add two numbers together","inputSchema":{"type":"object","properties":{"a":{"type":"number","description":"First number"},"b":{"type":"number","description":"Second number"}},"required":["a","b"]}},{"name":"send_birthday_email","description":"Send a birthday email with emojis and Japanese greetings","inputSchema":{"type":"object","properties":{"to_email":{"type":"string","description":"Recipient email address"},"subject":{"type":"string","description":"Email subject line","default":"🎉 Happy Birthday! Party Time! 🎂"}},"required":["to_email"]}}]}}
+2025-06-03T21:04:59.676Z [demo-server] [info] Message from server: {"jsonrpc":"2.0","id":2,"result":{"tools":[{"name":"echo","description":"Echo back the input text","inputSchema":{"type":"object","properties":{"text":{"type":"string","description":"Text to echo back"}},"required":["text"]}},{"name":"add_numbers","description":"Add two numbers together","inputSchema":{"type":"object","properties":{"a":{"type":"number","description":"First number"},"b":{"type":"number","description":"Second number"}},"required":["a","b"]}},{"name":"send_birthday_email","description":"Send a birthday email with emojis and Japanese greetings","inputSchema":{"type":"object","properties":{"to_email":{"type":"string","description":"Recipient email address"},"subject":{"type":"string","description":"Email subject line","default":"🎉 Happy Birthday! Party Time! 🎂"}},"required":["to_email"]}}]}}
+2025-06-03T21:04:59.677Z [demo-server] [info] Message from server: {"jsonrpc":"2.0","id":3,"error":{"code":-32601,"message":"Method not found"}}
+2025-06-03T21:04:59.828Z [demo-server] [info] Message from client: {"method":"prompts/list","params":{},"jsonrpc":"2.0","id":4}
+2025-06-03T21:04:59.831Z [demo-server] [info] Message from server: {"jsonrpc":"2.0","id":4,"error":{"code":-32601,"message":"Method not found"}}

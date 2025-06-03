@@ -63,7 +63,7 @@ async def handle_list_tools() -> list[types.Tool]:
                     "subject": {
                         "type": "string",
                         "description": "Email subject line",
-                        "default": "🎉 Happy Birthday! Party Time! 🎂"
+                        "default": "Happy Birthday! Party Time!"
                     },
                     "message": {
                         "type": "string",
@@ -95,10 +95,12 @@ async def handle_call_tool(
             raise ValueError("Missing arguments")
         
         to_email = arguments["to_email"]
-        subject = arguments.get("subject", "🎉 Happy Birthday! Party Time! 🎂")
+        subject = arguments.get("subject", "Happy Birthday! Party Time!")
         message = arguments["message"]
 
-        # Clean subject and message to remove non-ASCII characters
+        # Replace non-breaking spaces and normalize newlines
+        message = message.replace('\xa0', ' ').replace('\r\n', '\n').replace('\r', '\n')
+        # Remove non-ASCII characters from subject and message
         subject_clean = remove_non_ascii(subject)
         message_clean = remove_non_ascii(message)
 
@@ -109,7 +111,8 @@ async def handle_call_tool(
         msg['Subject'] = subject_clean
         msg['From'] = EMAIL_ADDRESS
         msg['To'] = to_email
-        msg.set_content(message_clean, charset='utf-8')
+        # Explicitly encode content as UTF-8
+        msg.set_content(message_clean.encode('utf-8', errors='ignore').decode('utf-8'), charset='utf-8')
         
         try:
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
@@ -117,12 +120,12 @@ async def handle_call_tool(
                 smtp.send_message(msg)
             return [types.TextContent(
                 type="text", 
-                text=f"🎉 Birthday email sent to {to_email}! 🎂\n📧 Subject: {subject_clean}"
+                text=f"Birthday email sent to {to_email}!\nSubject: {subject_clean}"
             )]
         except Exception as e:
             return [types.TextContent(
                 type="text", 
-                text=f"❌ Email failed: {str(e)}"
+                text=f"Email failed: {str(e)}"
             )]
     
     else:

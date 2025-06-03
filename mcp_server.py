@@ -3,16 +3,19 @@
 import asyncio
 import sys
 import smtplib
+import os
 from email.message import EmailMessage
 from mcp.server import Server
 from mcp.server.models import InitializationOptions
 import mcp.server.stdio
 import mcp.types as types
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
 
 # Create a server instance
 server = Server("demo-server")
-
 
 @server.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
@@ -74,7 +77,6 @@ async def handle_list_tools() -> list[types.Tool]:
         )
     ]
 
-
 @server.call_tool()
 async def handle_call_tool(
     name: str, arguments: dict | None
@@ -102,9 +104,9 @@ async def handle_call_tool(
         to_email = arguments.get("to_email")
         subject = arguments.get("subject", "🎉 Happy Birthday! Party Time! 🎂")
         
-        # Email configuration
-        EMAIL_ADDRESS = 'info@pexabo.com'
-        EMAIL_PASSWORD = 'ivxn scrz gvqa dyre'
+        # Email configuration using environment variables
+        EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS', 'info@pexabo.com')
+        EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD', 'your-default-password')
         
         # Create email message
         msg = EmailMessage()
@@ -184,7 +186,6 @@ P.S. This birthday greeting was sent with love using MCP! 💖🎈
     else:
         raise ValueError(f"Unknown tool: {name}")
 
-
 async def main():
     # Run the server using stdin/stdout streams
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
@@ -194,7 +195,10 @@ async def main():
             InitializationOptions(
                 server_name="demo-server",
                 server_version="0.1.0",
-                capabilities=server.get_capabilities(),
+                capabilities=server.get_capabilities(
+                    notification_options={},  # Default empty dict for notification options
+                    experimental_capabilities={}  # Default empty dict for experimental capabilities
+                ),
             ),
         )
 

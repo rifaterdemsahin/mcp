@@ -194,14 +194,7 @@ async def main():
             InitializationOptions(
                 server_name="demo-server",
                 server_version="0.1.0",
-                capabilities=server.get_capabilities(
-                    notification_options=types.ServerNotificationOptions(
-                        tools_changed=True,
-                        resources_changed=True,
-                        prompts_changed=True,
-                    ),
-                    experimental_capabilities={},
-                ),
+                capabilities=server.get_capabilities(),
             ),
         )
 

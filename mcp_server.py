@@ -6,10 +6,11 @@ import smtplib
 import os
 from email.message import EmailMessage
 from mcp.server import Server
-from mcp.server.models import InitializationOptions, NotificationOptions  # Updated import
+from mcp.server.models import InitializationOptions
 import mcp.server.stdio
 import mcp.types as types
 from dotenv import load_dotenv
+from types import SimpleNamespace
 
 # Load environment variables from .env file
 load_dotenv()
@@ -96,7 +97,52 @@ async def handle_call_tool(
         
         birthday_message = """🎉 HAPPY BIRTHDAY! 🎂
 お誕生日おめでとうございます！🎌
-... [rest of your message] ..."""
+
+Dear Birthday Star! ⭐
+
+Wishing you the most amazing birthday ever! 🌟
+
+May your special day be filled with:
+🎁 Wonderful surprises
+😄 Lots of laughter and joy  
+🎊 Fun celebrations
+💕 Love from friends and family
+✨ Magical moments
+😊 Happiness that lasts all year
+📸 Unforgettable memories
+
+Here's to another fantastic year ahead! 🥂
+
+Hope your birthday is as awesome as you are! 🌈
+
+Blow out those candles and make a wish! 🕯️💫
+
+🎵 Happy Birthday to You! 🎵
+🎵 Happy Birthday to You! 🎵
+🎵 Happy Birthday Dear Friend! 🎵
+🎵 Happy Birthday to You! 🎵
+
+🎌 Japanese Birthday Greetings:
+お誕生日おめでとうございます！(Otanjoubi omedetou gozaimasu!)
+素敵な一年になりますように！🌸 (Suteki na ichinen ni narimasu you ni!)
+Happy Birthday & May you have a wonderful year! 
+
+🎋 Japanese Holiday Greetings:
+新年明けましておめでとうございます！🎍 (Akemashite omedetou gozaimasu!)
+今年もよろしくお願いします！⛩️ (Kotoshi mo yoroshiku onegaishimasu!)
+Happy New Year & Please treat me favorably this year too!
+
+春の季節、桜の花のように美しい日々でありますように！🌸
+(Haru no kisetsu, sakura no hana no you ni utsukushii hibi de arimasu you ni!)
+In spring season, may your days be as beautiful as cherry blossoms!
+
+With warmest birthday wishes, 💝
+Your MCP-powered friend 🐍💻
+
+P.S. This birthday greeting was sent with love using MCP! 💖🎈
+
+🎂🎉🎁🎊🌟⭐✨🎈💫🥳🎌🌸🎋
+"""
         
         msg.set_content(birthday_message, charset='utf-8')
         
@@ -119,13 +165,14 @@ async def handle_call_tool(
 
 async def main():
     print("Debug: Preparing notification_options", file=sys.stderr)
+    
+    # Create a simple namespace object instead of NotificationOptions
+    notification_options = SimpleNamespace(tools_changed=False)
+    
+    print(f"Debug: Calling get_capabilities with notification_options={notification_options}", 
+          file=sys.stderr)
+    
     try:
-        # FIX: Use NotificationOptions class instead of dict
-        notification_options = NotificationOptions(tools_changed=False)
-        
-        print(f"Debug: Calling get_capabilities with notification_options={notification_options}", 
-              file=sys.stderr)
-        
         async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
             await server.run(
                 read_stream,

@@ -470,3 +470,23 @@ Remember to:
    EMAIL_PASSWORD=your_app_password
    ```
 2. Enable "Less secure app access" in your Gmail account or use an app-specific password if you have 2FA enabled
+
+---
+
+2025-06-03T21:00:39.021Z [demo-server] [info] Initializing server...
+2025-06-03T21:00:39.055Z [demo-server] [info] Server started and connected successfully
+2025-06-03T21:00:39.058Z [demo-server] [info] Message from client: {"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"claude-ai","version":"0.1.0"}},"jsonrpc":"2.0","id":0}
+Traceback (most recent call last):
+  File "C:\projects\mcp\mcp_server.py", line 9, in <module>
+    from mcp.server.models import InitializationOptions, NotificationOptions  # Updated import
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'NotificationOptions' from 'mcp.server.models' (C:\projects\mcp\mcp_env\Lib\site-packages\mcp\server\models.py)
+2025-06-03T21:00:40.023Z [demo-server] [info] Server transport closed
+2025-06-03T21:00:40.024Z [demo-server] [info] Client transport closed
+2025-06-03T21:00:40.025Z [demo-server] [info] Server transport closed unexpectedly, this is likely due to the process exiting early. If you are developing this MCP server you can add output to stderr (i.e. `console.error('...')` in JavaScript, `print('...', file=sys.stderr)` in python) and it will appear in this log.
+2025-06-03T21:00:40.025Z [demo-server] [error] Server disconnected. For troubleshooting guidance, please visit our [debugging documentation](https://modelcontextprotocol.io/docs/tools/debugging) {"context":"connection"}
+2025-06-03T21:00:40.025Z [demo-server] [info] Client transport closed
+
+
+---
+

@@ -1,0 +1,12 @@
+{
+  "allowDevTools": true,
+  "mcpServers": {
+    "python-runner": {
+      "command": "npx",
+      "args": [
+        "@pydantic/mcp-run-python"
+      ],
+      "env": {}
+    }
+  }
+}

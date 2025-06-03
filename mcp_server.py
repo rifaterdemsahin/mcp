@@ -4,6 +4,7 @@ import asyncio
 import sys
 import smtplib
 import os
+import re
 from email.message import EmailMessage
 from mcp.server import Server
 from mcp.server.models import InitializationOptions
@@ -17,6 +18,10 @@ load_dotenv()
 
 # Create a server instance
 server = Server("demo-server")
+
+def remove_non_ascii(text):
+    """Remove non-ASCII characters from the input text."""
+    return re.sub(r'[^\x00-\x7F]+', '', text)
 
 @server.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
@@ -91,16 +96,20 @@ async def handle_call_tool(
         
         to_email = arguments["to_email"]
         subject = arguments.get("subject", "🎉 Happy Birthday! Party Time! 🎂")
-        message = arguments["message"]  # Now required and explicitly used
+        message = arguments["message"]
+
+        # Clean subject and message to remove non-ASCII characters
+        subject_clean = remove_non_ascii(subject)
+        message_clean = remove_non_ascii(message)
 
         EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS', 'info@pexabo.com')
         EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD', 'your-default-password')
         
         msg = EmailMessage()
-        msg['Subject'] = subject
+        msg['Subject'] = subject_clean
         msg['From'] = EMAIL_ADDRESS
         msg['To'] = to_email
-        msg.set_content(message, charset='utf-8')
+        msg.set_content(message_clean, charset='utf-8')
         
         try:
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
@@ -108,7 +117,7 @@ async def handle_call_tool(
                 smtp.send_message(msg)
             return [types.TextContent(
                 type="text", 
-                text=f"🎉 Birthday email sent to {to_email}! 🎂\n📧 Subject: {subject}"
+                text=f"🎉 Birthday email sent to {to_email}! 🎂\n📧 Subject: {subject_clean}"
             )]
         except Exception as e:
             return [types.TextContent(

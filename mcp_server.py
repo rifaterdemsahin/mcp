@@ -196,8 +196,8 @@ async def main():
                 server_name="demo-server",
                 server_version="0.1.0",
                 capabilities=server.get_capabilities(
-                    notification_options={},  # Default empty dict for notification options
-                    experimental_capabilities={}  # Default empty dict for experimental capabilities
+                    notification_options={"tools_changed": False},  # Added tools_changed
+                    experimental_capabilities={}  # Kept as empty dict
                 ),
             ),
         )

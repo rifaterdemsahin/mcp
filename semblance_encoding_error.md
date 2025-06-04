@@ -347,3 +347,16 @@ if __name__ == "__main__":
 This script includes the `remove_non_ascii` function, which uses a regular expression to strip out any characters not in the ASCII range. By applying this function to both the email subject and message, you can mitigate encoding issues when sending emails.
 
 
+
+----
+
+2025-06-03T22:13:18.074Z [info] [demo-server] Message from client: {"method":"tools/call","params":{"name":"send_birthday_email","arguments":{"message":"Hello! This is a reminder to complete your expenses. Please submit your expense reports and organize your receipts. Thanks!","subject":"Expense Reminder","to_email":"rifaterdemsahin@hotmail.com"}},"jsonrpc":"2.0","id":13}
+2025-06-03T22:13:18.264Z [info] [demo-server] Message from server: {"jsonrpc":"2.0","id":13,"result":{"content":[{"type":"text","text":"Email failed: 'ascii' codec can't encode character '\\xa0' in position 21: ordinal not in range(128)"}],"isError":false}}
+2025-06-03T22:13:21.921Z [info] [demo-server] Message from client: {"method":"tools/call","params":{"name":"send_birthday_email","arguments":{"message":"Reminder to do expenses","subject":"Expenses","to_email":"rifaterdemsahin@hotmail.com"}},"jsonrpc":"2.0","id":14}
+2025-06-03T22:13:22.072Z [info] [demo-server] Message from server: {"jsonrpc":"2.0","id":14,"result":{"content":[{"type":"text","text":"Email failed: 'ascii' codec can't encode character '\\xa0' in position 21: ordinal not in range(128)"}],"isError":false}}
+2025-06-03T22:14:02.158Z [info] [demo-server] Message from client: {"method":"tools/call","params":{"name":"send_birthday_email","arguments":{"message":"Please do your expenses today.","subject":"Expense Reminder","to_email":"rifaterdemsahin@hotmail.com"}},"jsonrpc":"2.0","id":15}
+2025-06-03T22:14:02.337Z [info] [demo-server] Message from server: {"jsonrpc":"2.0","id":15,"result":{"content":[{"type":"text","text":"Email failed: 'ascii' codec can't encode character '\\xa0' in position 21: ordinal not in range(128)"}],"isError":false}}
+2025-06-03T22:17:25.477Z [info] [demo-server] Message from client: {"method":"tools/call","params":{"name":"send_birthday_email","arguments":{"message":"Expense reminder","subject":"Expenses","to_email":"rifaterdemsahin@hotmail.com"}},"jsonrpc":"2.0","id":16}
+2025-06-03T22:17:25.617Z [info] [demo-server] Message from server: {"jsonrpc":"2.0","id":16,"result":{"content":[{"type":"text","text":"Email failed: 'ascii' codec can't encode character '\\xa0' in position 21: ordinal not in range(128)"}],"isError":false}}
+
+

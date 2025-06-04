@@ -15,6 +15,22 @@ from types import SimpleNamespace
 import logging
 from typing import Dict, List, Optional
 
+
+import sys
+import os
+import codecs
+
+# Force UTF-8 encoding
+os.environ['PYTHONIOENCODING'] = 'utf-8'
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
+
+# For older Python versions
+if hasattr(sys.stdout, 'buffer'):
+    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
+
+
 # Configure logging
 logging.basicConfig(
     level=logging.DEBUG,
